@@ -1,0 +1,137 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:fragment="content(title,maincontent)">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title th:text="${title}"></title>
+	<link rel="shortcut icon" type="image/png" th:href="@{/images/logos/favicon.png}" />
+	<link rel="stylesheet" th:href="@{/css/styles.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+</head>
+
+<body>
+	<!--  Body Wrapper -->
+	<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+		data-sidebar-position="fixed" data-header-position="fixed">
+		<!-- Sidebar Start -->
+		<aside class="left-sidebar">
+			<!-- Sidebar scroll-->
+			<div>
+				<div class="brand-logo d-flex align-items-center justify-content-between">
+					<a href="./index.html" class="text-nowrap logo-img">
+						<th:block sec:authorize="isAuthenticated()">
+							<a th:href="@{'/nhanvien/update/' + ${#authentication.name}}">Welcome, <th:block sec:authentication="name"></a>
+
+
+						</th:block>
+						<br>
+						<a th:href="@{/nhanvien/logout}">Logout</a>
+						</th:block>
+						<!-- 
+						<th:block sec:authorize="!isAuthenticated()">
+							<a th:href="@{/account/login}" role="button" data-toggle="modal"
+								style="padding-right: 0"><span class="btn btn-large btn-success">Login</span></a>
+						</th:block>
+						-->
+					</a>
+					<div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+						<i class="ti ti-x fs-8"></i>
+					</div>
+				</div>
+				<!-- Sidebar navigation-->
+				<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+					<ul id="sidebarnav">
+						<li class="nav-small-cap">
+							<i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+							<span class="hide-menu">Home</span>
+						</li>
+						<th:block sec:authorize="hasAnyRole('ROLE_ADMIN')">
+							<li class="sidebar-item">
+								<a class="sidebar-link" th:href="@{/nhanvien/index}" aria-expanded="false">
+									<span>
+										<i class="ti ti-layout-dashboard"></i>
+									</span>
+									<span class="hide-menu">Danh sách nhân viên</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" th:href="@{/nhanvien/listyeucau}" aria-expanded="false">
+									<span>
+										<i class="ti ti-layout-dashboard"></i>
+									</span>
+									<span class="hide-menu">Yêu cầu</span>
+								</a>
+							</li>
+						</th:block>
+						<th:block sec:authorize="hasRole('ROLE_SUPPORTER')">
+							<li class="sidebar-item">
+								<a class="sidebar-link" th:href="@{/support/index}" aria-expanded="false">
+									<span>
+										<i class="ti ti-layout-dashboard"></i>
+									</span>
+									<span class="hide-menu">Các yêu cầu của bạn</span>
+								</a>
+							</li>
+						</th:block>
+						<!-- 
+						<li class="nav-small-cap">
+							<i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+							<span class="hide-menu">UI COMPONENTS</span>
+						</li>
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+								<span>
+									<i class="ti ti-article"></i>
+								</span>
+								<span class="hide-menu">Buttons</span>
+							</a>
+						</li>
+-->
+
+
+					</ul>
+
+				</nav>
+				<!-- End Sidebar navigation -->
+			</div>
+			<!-- End Sidebar scroll-->
+		</aside>
+		<!--  Sidebar End -->
+		<!--  Main wrapper -->
+		<div class="body-wrapper">
+			<!--  Header Start -->
+			<header class="app-header">
+				<nav class="navbar navbar-expand-lg navbar-light">
+					<ul class="navbar-nav">
+						<li class="nav-item d-block d-xl-none">
+							<a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse"
+								href="javascript:void(0)">
+								<i class="ti ti-menu-2"></i>
+							</a>
+						</li>
+
+					</ul>
+
+				</nav>
+			</header>
+			<!--  Header End -->
+			<div class="container-fluid">
+				<div class="card">
+					<div class="card-body">
+						<div th:replace="${maincontent}"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- -->
+	<script th:src="@{/libs/jquery/dist/jquery.min.js}"></script>
+	<script th:src="@{/libs/jquery/dist/jquery-ui.min.js}"></script>
+	<script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/sidebarmenu.js}"></script>
+	<script th:src="@{/js/app.min.js}"></script>
+	<script th:src="@{/libs/simplebar/dist/simplebar.js}"></script>
+</body>
+
+</html>

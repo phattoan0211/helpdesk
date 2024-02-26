@@ -1,0 +1,68 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/user :: content('yeucau', ~{this:: .container-fluid})}">
+
+<head>
+	<title>Yêu cầu</title>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<!-- Row 1 -->
+		<div class="row">
+			<!-- Main contents -->
+			<h5 class="card-title fw-semibold mb-4" th:text="${name.username}"></h5>
+			<Br>
+			<h6 class="card-title fw-semibold mb-4"
+				th:utext="${name.quyen == 1 ? 'admin' : (name.quyen == 2 ? 'supporter' : 'employee')}"></h6>
+			<div class="card">
+				<div class="card-body">
+					<form th:action="@{/nhanvien/searchbydate}" method="get">
+						<div class="mb-3">
+							From:<input type="date" class="form-control" name="from">
+							To:<input type="date" class="form-control" name="to">
+							<br>
+							Độ ưu tiên: <select name="douutien">
+								<option th:each="douutien:${douutiens}" th:value="${douutien.madouutien}"
+									th:text="${douutien.tendouutien}"></option>
+							</select>
+						</div>
+						<input type="hidden" name="username" th:value="${name.username}">
+						<input type="submit" class="btn btn-primary" value="Search"></input>
+					</form>
+					<br>
+					<th:block th:if="${msg != null}">
+						<div class="alert alert-info">
+							<span th:text="${msg}"></span>
+						</div>
+					</th:block>
+					<table class="table text-nowrap mb-0 align-center" border="3">
+						<tr>
+							<th>Mã Yêu cầu</th>
+							<th>Tiêu đề</th>
+							<th>Nội dung</th>
+							<th>Ngày gửi</th>
+							<th>Ưu tiên</th>
+							<th>Người xử lý</th>
+							<th>Người gửi</th>
+						</tr>
+						<tr th:each="yeucau : ${yeucaus}">
+							<td th:text="${yeucau.mayeucau}"></td>
+							<td><a th:href="@{'/nhanvien/add/'+ ${yeucau.mayeucau}}" th:text="${yeucau.tieude}"></a>
+							</td>
+							<td th:text="${yeucau.noidung}"></td>
+							<td>
+								<span th:with="formattedDate=${#dates.format(yeucau.ngaygui, 'dd/MM/yyyy')}"
+									th:text="${formattedDate}"></span>
+							</td>
+							<td th:text="${yeucau.douutien.tendouutien}"></td>
+							<td th:utext="${yeucau.nhanvienByNvXuly?.username} ?: ''"></td>
+							<td th:text="${yeucau.nhanvienByNvGui.username}"></td>
+
+
+						</tr>
+					</table>
+					<!-- Main contents -->
+				</div>
+			</div>
+</body>
+
+</html>

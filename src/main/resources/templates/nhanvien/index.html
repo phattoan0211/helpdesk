@@ -1,0 +1,63 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layout/user :: content('dashboard', ~{this:: .container-fluid})}">
+
+
+
+<head>
+	<title>DashBoard</title>
+</head>
+
+<body>
+
+	<div class="container-fluid">
+		<!--  Row 1 -->
+
+		<div class="row">
+
+			<!--main contents  -->
+			<div class="d-flex justify-content-center align-items-center">
+				<a th:href="@{/nhanvien/register}" class="card-title fw-semibold mb-4">Add new account</a>
+			</div>
+			<table class="table text-nowrap mb-0 align-center" border="3">
+				<tr>
+					<th>Username</th>
+					<th>Personal Information</th>
+					<th>Additional Details</th>
+					<th>Action</th>
+				</tr>
+				<tr th:each="nhanvien : ${nhanviens}">
+					<td><a th:href="@{'/nhanvien/yeucau/'+ ${nhanvien.username}}" th:text="${nhanvien.username}"></a>
+					</td>
+					<td>
+						<strong>Fullname:</strong>
+						<span th:text="${nhanvien.hoten}"></span><br>
+						<strong>DoB:</strong>
+						<span th:with="formattedDate=${#dates.format(nhanvien.ngaysinh, 'dd/MM/yyyy')}"
+							th:text="${formattedDate}"></span>
+					</td>
+					<td>
+						<strong>Activated:</strong>
+						<span th:text="${nhanvien.kichhoat ? 'yes' : 'no'}"></span><br>
+						<strong>Role:</strong>
+						<span
+							th:utext="${nhanvien.quyen == 1 ? 'admin' : (nhanvien.quyen == 2 ? 'supporter' : 'employee')}"></span><br>
+						<strong>Photo:</strong>
+						<img th:src="@{'/images/' + ${nhanvien.hinhanh}}" width="70" height="70">
+					</td>
+					<td>
+						<a href="#">Active/Deactive</a><br>
+						<a href="#">Edit</a><br>
+						<a href="#">Delete</a>
+					</td>
+				</tr>
+			</table>
+			<!--main contents  -->
+		</div>
+
+
+	</div>
+
+
+</body>
+
+</html>

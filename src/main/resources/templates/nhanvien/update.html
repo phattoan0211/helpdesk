@@ -1,0 +1,78 @@
+﻿<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/user :: content('Update', ~{this:: .container-fluid})}">
+
+
+
+<head>
+	<title>Update</title>
+
+
+</head>
+
+<body>
+	<div class="container-fluid">
+		<!--  Row 1 -->
+
+		<div class="row">
+
+			<!--main contents  -->
+			<table class="table text-nowrap mb-0 align-center" border="3">
+				<tr>
+					<th:block th:if="${msg != null}">
+						<div class="alert alert-info">
+							<span th:text="${msg}"></span>
+						</div>
+					</th:block>
+				</tr>
+				<tr>
+					<form method="post" th:action="@{/nhanvien/update}" enctype="multipart/form-data">
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><input type="password" id="password" placeholder="Password" th:field="${nhanvien.password}" />
+					</td>
+				</tr>
+				<tr>
+					<td>Full Name:</td>
+					<td><input type="text" id="hoten" placeholder="Full Name" th:field="${nhanvien.hoten}" /></td>
+				</tr>
+				<tr>
+				</tr>
+				<tr>
+					<td>Date of Birth:</td>
+					<td><input type="date" th:field="${nhanvien.ngaysinh}" id="ngaysinh" /></td>
+				</tr>
+				<tr>
+					<td>Upload File:</td>
+					<td><input type="file" name="file" />
+
+					</td>
+
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<img th:src="@{'/images/' + ${nhanvien.hinhanh}}" width="100" height="100">
+					</td>
+				</tr>
+
+				<tr><td></td>
+					<td colspan="2">
+						<input type="hidden" th:field="${nhanvien.username}">
+						<input type="hidden" th:field="${nhanvien.kichhoat}">
+						<input type="hidden" th:field="${nhanvien.quyen}">
+						<input type="hidden" th:field="${nhanvien.hinhanh}">
+						<input type="submit" value="Update" />
+					</td>
+				</tr>
+				</form>
+			</table>
+			<!--main contents  -->
+		</div>
+
+
+	</div>
+
+
+</body>
+
+</html>

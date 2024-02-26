@@ -1,0 +1,56 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/user :: content('yeucau', ~{this:: .container-fluid})}"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<title>Yêu cầu</title>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<!-- Row 1 -->
+		<div class="row">
+			<!-- Main contents -->
+			<div class="card">
+				<div class="card-body">
+<		<div class="d-flex justify-content-center align-items-center">
+			<p class="card-title fw-semibold mb-4">Danh sách yêu cầu mới</p>
+
+		</div>
+					<br>
+					<th:block th:if="${msg != null}">
+						<div class="alert alert-info">
+							<span th:text="${msg}"></span>
+						</div>
+					</th:block>
+					<table class="table text-nowrap mb-0 align-center" border="3">
+						<tr>
+							<th>Mã Yêu cầu</th>
+							<th>Tiêu đề</th>
+							<th>Nội dung</th>
+							<th>Ngày gửi</th>
+							<th>Ưu tiên</th>
+							<th>Người xử lý</th>
+							<th>Người gửi</th>
+						</tr>
+						<tr th:each="yeucau : ${yeucaus}">
+							<td th:text="${yeucau.mayeucau}"></td>
+							<td><a th:href="@{'/nhanvien/add/'+ ${yeucau.mayeucau}}" th:text="${yeucau.tieude}"></a>
+							</td>
+							<td th:text="${yeucau.noidung}"></td>
+							<td>
+								<span th:with="formattedDate=${#dates.format(yeucau.ngaygui, 'dd/MM/yyyy')}"
+									th:text="${formattedDate}"></span>
+							</td>
+							<td th:text="${yeucau.douutien.tendouutien}"></td>
+							<td th:utext="${yeucau.nhanvienByNvXuly?.username} ?: ''"></td>
+							<td th:text="${yeucau.nhanvienByNvGui.username}"></td>
+
+
+						</tr>
+					</table>
+					<!-- Main contents -->
+				</div>
+			</div>
+</body>
+
+</html>
